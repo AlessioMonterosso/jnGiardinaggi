@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Clienti</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleSearch()">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="showSearch">
+    <ion-searchbar
+      placeholder="Nome o telefono…"
+      (ionInput)="onSearch($event)"
+      animated
+      [debounce]="150">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="clientiFiltrati$ | async as clients">
+    <div class="client-list">
+      <div class="client-item" *ngFor="let c of clients" (click)="vaiAlDettaglio(c.id!)">
+        <div class="avatar">{{ getInitials(c.name) }}</div>
+        <div class="client-info">
+          <div class="client-name">{{ c.name }}</div>
+          <div class="client-phone" *ngIf="c.phone">{{ c.phone }}</div>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="chevron"></ion-icon>
+      </div>
+      <div class="empty-state" *ngIf="clients.length === 0">
+        <p>Nessun cliente trovato</p>
+      </div>
+    </div>
+  </ng-container>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="apriFormNuovoCliente()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

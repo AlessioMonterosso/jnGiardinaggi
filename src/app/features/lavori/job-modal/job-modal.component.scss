@@ -1,0 +1,161 @@
+// ── Etichette campi ───────────────────────────────────────────
+.field-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #6b6b6b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 20px 0 4px;
+}
+
+// ── Item form ─────────────────────────────────────────────────
+.form-item {
+  --background: var(--color-surface);
+  --border-color: var(--color-border);
+  --border-radius: 10px;
+  --padding-start: 14px;
+  --inner-padding-end: 14px;
+  border-radius: 10px;
+  border: 0.5px solid var(--color-border);
+  margin-bottom: 2px;
+
+  ion-input, ion-textarea {
+    --color: #f0f0f0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+  }
+}
+
+ion-note {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  margin-left: 4px;
+}
+
+// ── Cliente searchable ────────────────────────────────────────
+.client-input-wrap {
+  border: 0.5px solid var(--color-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.client-selected {
+  padding: 14px;
+  background: var(--color-surface);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #f0f0f0;
+  cursor: pointer;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+
+  &.placeholder { color: #6b6b6b; }
+}
+
+.client-search-panel {
+  background: var(--color-surface);
+  border: 0.5px solid var(--color-primary);
+  border-radius: 10px;
+  margin-top: 6px;
+  overflow: hidden;
+
+  ion-searchbar {
+    --background: #222;
+    --color: #f0f0f0;
+    --placeholder-color: #6b6b6b;
+    --icon-color: #6b6b6b;
+    --border-radius: 0;
+    padding: 0;
+  }
+}
+
+.client-list { max-height: 200px; overflow-y: auto; }
+
+.client-option {
+  padding: 12px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #f0f0f0;
+  border-top: 0.5px solid var(--color-border);
+  cursor: pointer;
+
+  &:first-child { border-top: none; }
+  &:active { background: rgba(43, 170, 114, 0.12); }
+}
+
+.client-empty {
+  padding: 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: #6b6b6b;
+  text-align: center;
+}
+
+// ── Select appuntamento ───────────────────────────────────────
+.select-wrap { margin-bottom: 2px; }
+
+.native-select {
+  width: 100%;
+  background: var(--color-surface);
+  border: 0.5px solid var(--color-border);
+  border-radius: 10px;
+  color: #f0f0f0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  padding: 14px;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+
+  option { background: #1a1a1a; }
+}
+
+.select-hint {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: #6b6b6b;
+  margin-top: 4px;
+  padding-left: 4px;
+}
+
+// ── Segment stato ─────────────────────────────────────────────
+.seg-stato {
+  --background: var(--color-surface);
+  border: 0.5px solid var(--color-border);
+  border-radius: 10px;
+  overflow: hidden;
+
+  ion-segment-button {
+    --color: #6b6b6b;
+    --color-checked: #f0f0f0;
+    --background-checked: #2a2a2a;
+    --indicator-color: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    --border-radius: 0;
+    min-height: 44px;
+  }
+}
+
+// ── Azioni ────────────────────────────────────────────────────
+.action-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 32px;
+  padding-bottom: 16px;
+
+  ion-button {
+    --border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+
+    &:first-child {
+      --background: var(--color-primary);
+      --color: #fff;
+    }
+  }
+}

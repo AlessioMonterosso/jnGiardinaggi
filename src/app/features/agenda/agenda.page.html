@@ -1,0 +1,163 @@
+<ion-header [translucent]="false">
+  <!-- Segment: Giorno | Settimana | Mese -->
+  <ion-toolbar>
+    <ion-segment [value]="view" (ionChange)="onViewChange($any($event))">
+      <ion-segment-button value="giorno"><ion-label>Giorno</ion-label></ion-segment-button>
+      <ion-segment-button value="settimana"><ion-label>Settimana</ion-label></ion-segment-button>
+      <ion-segment-button value="mese"><ion-label>Mese</ion-label></ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <!-- Navigazione < Label > -->
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="prev()">
+        <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="nav-label">{{ headerLabel }}</div>
+    <ion-buttons slot="end">
+      <ion-button (click)="next()">
+        <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="false">
+
+  <!-- Spinner caricamento — evita interazioni su contenuto vuoto durante il fetch -->
+  <div class="agenda-loading" *ngIf="isLoading">
+    <div class="loading-dot"></div>
+    <div class="loading-dot"></div>
+    <div class="loading-dot"></div>
+  </div>
+
+  <ng-container *ngIf="!isLoading">
+
+    <!-- ═══════════════════ VISTA GIORNALIERA ═══════════════════ -->
+    <ng-container *ngIf="view === 'giorno'">
+
+      <!-- Strip settimanale orizzontale -->
+      <div class="week-strip">
+        <div class="day-chip"
+             *ngFor="let d of weekDays; trackBy: trackByDate"
+             [class.active]="isSelected(d)"
+             [class.today-ring]="isToday(d) && !isSelected(d)"
+             (click)="selectDay(d)">
+          <span class="chip-name">{{ getDayName(d) }}</span>
+          <span class="chip-num">{{ d.getDate() }}</span>
+        </div>
+      </div>
+
+      <!-- Lista appuntamenti del giorno -->
+      <div class="day-list">
+        <div class="app-card"
+             *ngFor="let app of dayAppointments; trackBy: trackByAppId"
+             (click)="openModal(app)">
+          <div class="app-time-col">
+            <span class="app-hour">{{ app.timeStart }}</span>
+            <span class="app-dur">{{ formatDuration(app.duration) }}</span>
+          </div>
+          <div class="app-body">
+            <div class="app-client">{{ getAppDisplayName(app) }}</div>
+            <div class="app-type">{{ app.workType }}</div>
+            <div class="app-addr" *ngIf="app.address">{{ app.address }}</div>
+          </div>
+          <ion-badge [color]="getStatusColor(app.status)" class="app-badge">
+            {{ getStatusLabel(app.status) }}
+          </ion-badge>
+        </div>
+
+        <div class="empty-day" *ngIf="dayAppointments.length === 0">
+          Nessun appuntamento per oggi
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ═══════════════════ VISTA SETTIMANALE ═══════════════════ -->
+    <ng-container *ngIf="view === 'settimana'">
+      <div class="week-grid-wrap">
+
+        <!-- Header colonne giorni  -->
+        <div class="week-grid-header">
+          <div class="wg-spacer"></div>
+          <div class="wg-day-hdr"
+               *ngFor="let d of weekDays; trackBy: trackByDate"
+               [class.wg-today]="isToday(d)"
+               [class.wg-selected]="isSelected(d)">
+            <span class="wghdr-name">{{ getDayName(d) }}</span>
+            <span class="wghdr-num">{{ d.getDate() }}</span>
+          </div>
+        </div>
+
+        <!-- Griglia oraria -->
+        <div class="week-grid-body">
+
+          <!-- Colonna ore -->
+          <div class="wg-time-col">
+            <div class="wg-hour-label"
+                 *ngFor="let h of hours; let i = index; trackBy: trackByIndex"
+                 [style.top.px]="i * 60">
+              {{ h }}:00
+            </div>
+          </div>
+
+          <!-- 7 colonne giorno -->
+          <div class="wg-day-col"
+               *ngFor="let d of weekDays; let i = index; trackBy: trackByDate"
+               (click)="selectDay(d)">
+
+            <!-- Linee orarie -->
+            <div class="wg-hour-line"
+                 *ngFor="let h of hours; let hi = index; trackBy: trackByIndex"
+                 [style.top.px]="hi * 60"></div>
+
+            <!-- Blocchi appuntamenti -->
+            <div class="wg-app-block"
+                 *ngFor="let app of getWeekDayAppointments(i); trackBy: trackByAppId"
+                 [style.top.px]="getAppTop(app)"
+                 [style.height.px]="getAppHeight(app)"
+                 (click)="$event.stopPropagation(); openModal(app)">
+              <span class="wapp-time">{{ app.timeStart }}</span>
+              <span class="wapp-name">{{ getAppDisplayName(app) }}</span>
+            </div>
+          </div>
+
+        </div><!-- /week-grid-body -->
+      </div><!-- /week-grid-wrap -->
+    </ng-container>
+
+    <!-- ═══════════════════ VISTA MENSILE ════════════════════════ -->
+    <ng-container *ngIf="view === 'mese'">
+      <div class="month-wrap">
+
+        <!-- Header giorni settimana -->
+        <div class="month-grid">
+          <div class="month-wday" *ngFor="let n of weekdayHeaders">{{ n }}</div>
+
+          <!-- Celle giorno -->
+          <div class="month-cell"
+               *ngFor="let day of calendarDays; trackBy: trackByIndex"
+               [class.other-month]="!day.isCurrentMonth"
+               [class.today-cell]="isToday(day.date)"
+               [class.selected-cell]="isSelected(day.date)"
+               (click)="selectDay(day.date)">
+            <span class="mcell-num">{{ day.date.getDate() }}</span>
+            <span class="mcell-dot" *ngIf="day.hasApps"></span>
+          </div>
+        </div>
+
+      </div>
+    </ng-container>
+
+  </ng-container><!-- /!isLoading -->
+
+
+  <!-- FAB aggiungi appuntamento -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="openModal()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

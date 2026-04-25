@@ -1,0 +1,7 @@
+{
+  "name": "dam-impianti",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

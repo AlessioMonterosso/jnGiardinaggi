@@ -1,0 +1,189 @@
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* Dark mode — attivato via classe body.dark (ThemeService) */
+@import "@ionic/angular/css/palettes/dark.class.css";
+
+@import './theme/variables.scss';
+
+/* ─── Typography ─────────────────────────────────────── */
+* {
+  font-family: 'DM Sans', var(--ion-font-family);
+}
+
+h1, h2, h3, h4, h5, h6,
+.kpi-value,
+ion-title,
+.logo-text {
+  font-family: 'Rajdhani', sans-serif;
+}
+
+/* ─── Toolbar ────────────────────────────────────────── */
+ion-toolbar {
+  --background: var(--ion-toolbar-background);
+  --color: var(--ion-toolbar-color);
+  --border-color: var(--color-border);
+}
+
+ion-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+/* ─── Tab bar ────────────────────────────────────────── */
+ion-tab-bar {
+  --background: var(--ion-tab-bar-background);
+  --border: 1px solid var(--color-border);
+}
+
+ion-tab-button {
+  --color: #6b6b6b;
+  --color-selected: var(--color-primary);
+
+  ion-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+  }
+}
+
+/* ─── Cards ──────────────────────────────────────────── */
+ion-card {
+  --background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: none;
+  margin: 0 0 12px;
+}
+
+/* ─── Items ──────────────────────────────────────────── */
+ion-item {
+  --background: var(--color-surface);
+  --border-color: var(--color-border);
+}
+
+/* ─── Sidebar ────────────────────────────────────────── */
+ion-menu {
+  --background: var(--ion-toolbar-background);
+  --width: 240px;
+
+  .sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 28px 20px 20px;
+    border-bottom: 1px solid var(--color-border);
+
+    .logo-bolt { font-size: 22px; }
+
+    .logo-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ion-text-color);
+      letter-spacing: 1px;
+    }
+
+    .logo-green { color: var(--color-primary); }
+  }
+
+  ion-item {
+    --background: transparent;
+    --color: var(--ion-color-medium);
+    --border-color: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    margin: 2px 8px;
+    border-radius: 8px;
+
+    ion-icon { color: var(--ion-color-medium); }
+
+    &.active-link {
+      --background: rgba(43, 170, 114, 0.12);
+      --color: var(--color-primary);
+      ion-icon { color: var(--color-primary); }
+    }
+  }
+}
+
+/* ─── Buttons ────────────────────────────────────────── */
+ion-button[color="secondary"] {
+  --background: var(--color-primary);
+  --color: #ffffff;
+}
+
+/* ─── Action buttons layout ──────────────────────────── */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+/* ─── Searchbar ──────────────────────────────────────── */
+ion-searchbar {
+  --background: var(--color-surface);
+  --color: #f0f0f0;
+  --placeholder-color: #6b6b6b;
+  --icon-color: #6b6b6b;
+  --border-radius: 10px;
+}
+
+/* ─── User menu ActionSheet ──────────────────────────── */
+ion-action-sheet.user-menu-sheet {
+  --background: var(--color-surface);
+  --button-background: var(--color-surface);
+  --button-color: var(--ion-text-color);
+  --color: var(--ion-color-medium);
+
+  .action-sheet-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+  }
+
+  .action-sheet-button {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+  }
+
+  .action-sheet-destructive {
+    color: #e55353 !important;
+  }
+
+  .action-sheet-cancel {
+    --button-background: var(--color-background);
+    color: var(--ion-color-medium);
+  }
+}
+
+/* ─── PWA update toast ───────────────────────────────── */
+.update-toast {
+  --background: var(--color-surface);
+  --color: #ffffff;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  margin-bottom: 80px;
+}
+
+/* ─── Modal fullscreen (mobile) ─────────────────────── */
+ion-modal.fullscreen-modal {
+  --height: 100%;
+  --width: 100%;
+  --border-radius: 0;
+  --box-shadow: none;
+}

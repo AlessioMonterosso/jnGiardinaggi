@@ -1,0 +1,190 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pagamenti</ion-title>
+  </ion-toolbar>
+
+  <!-- Segment: Movimenti / Report -->
+  <ion-toolbar class="segment-toolbar">
+    <ion-segment [value]="activeView" (ionChange)="onViewChange($event)">
+      <ion-segment-button value="movimenti">
+        <ion-label>Movimenti</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="report">
+        <ion-label>Report</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <!-- Month navigator — solo in vista Movimenti -->
+  <ion-toolbar class="month-toolbar" *ngIf="activeView === 'movimenti'">
+    <div class="month-nav">
+      <ion-button fill="clear" (click)="prevMonth()">
+        <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+      <span class="month-label">{{ monthLabel }}</span>
+      <ion-button fill="clear" (click)="nextMonth()">
+        <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page-content">
+
+    <!-- ════════════════ VISTA MOVIMENTI ════════════════ -->
+    <ng-container *ngIf="activeView === 'movimenti'">
+
+      <!-- KPI cards -->
+      <div class="kpi-row">
+        <div class="kpi-card kpi-fattura">
+          <div class="kpi-label">Fatturato</div>
+          <div class="kpi-value">{{ formatAmount(totFattura) }}</div>
+        </div>
+        <div class="kpi-card kpi-contanti">
+          <div class="kpi-label">Contanti</div>
+          <div class="kpi-value">{{ formatAmount(totContanti) }}</div>
+        </div>
+        <div class="kpi-card kpi-totale">
+          <div class="kpi-label">Totale</div>
+          <div class="kpi-value">{{ formatAmount(totale) }}</div>
+        </div>
+      </div>
+
+      <!-- Weekly bar chart -->
+      <div class="chart-section">
+        <p class="section-title">Questa settimana</p>
+        <div class="chart-wrap">
+          <div class="chart-col" *ngFor="let day of weekDays" [class.today]="day.isToday">
+            <div class="bar-container">
+              <div class="bar-inner" [style.height.px]="day.totalH">
+                <div class="bar-fattura"  [style.height.px]="day.fatturaH"></div>
+                <div class="bar-contanti" [style.height.px]="day.contantiH"></div>
+              </div>
+            </div>
+            <span class="bar-label">{{ day.label }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Movimenti list -->
+      <p class="section-title">Movimenti</p>
+
+      <div class="movements-list" *ngIf="!movLoading">
+        <div class="movement-item" *ngFor="let p of payments" (click)="apriModalModifica(p)">
+          <div class="dot" [class.dot-fattura]="p.paymentMethod === 'fattura'"
+                           [class.dot-contanti]="p.paymentMethod === 'contanti'"></div>
+          <div class="mov-info">
+            <div class="mov-client">{{ p.title || p.clientName }}</div>
+            <div class="mov-meta">
+              <span class="badge-type">{{ p.type === 'saldo' ? 'Saldo' : 'Acconto' }}</span>
+              <span class="mov-date">{{ formatDate(p.date) }}</span>
+            </div>
+          </div>
+          <div class="mov-amount"
+               [class.amount-fattura]="p.paymentMethod === 'fattura'"
+               [class.amount-contanti]="p.paymentMethod === 'contanti'">
+            {{ formatAmount(p.amount) }}
+          </div>
+        </div>
+        <div class="empty-state" *ngIf="payments.length === 0">
+          <p>Nessun pagamento in {{ monthLabel }}</p>
+        </div>
+      </div>
+
+      <div class="empty-state" *ngIf="movLoading">
+        <p>Caricamento…</p>
+      </div>
+
+    </ng-container>
+
+    <!-- ════════════════ VISTA REPORT ════════════════ -->
+    <ng-container *ngIf="activeView === 'report'">
+
+      <!-- Year navigator -->
+      <div class="month-nav year-nav">
+        <ion-button fill="clear" (click)="prevRepYear()">
+          <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+        </ion-button>
+        <span class="month-label">{{ repYear }}</span>
+        <ion-button fill="clear" (click)="nextRepYear()">
+          <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+      <div class="empty-state" *ngIf="repLoading">
+        <p>Caricamento report…</p>
+      </div>
+
+      <ng-container *ngIf="!repLoading && repLoaded">
+
+        <!-- KPI annuali -->
+        <div class="kpi-row">
+          <div class="kpi-card kpi-fattura">
+            <div class="kpi-label">Fattura</div>
+            <div class="kpi-value">{{ formatAmount(repData.fattura) }}</div>
+          </div>
+          <div class="kpi-card kpi-contanti">
+            <div class="kpi-label">Contanti</div>
+            <div class="kpi-value">{{ formatAmount(repData.contanti) }}</div>
+          </div>
+          <div class="kpi-card kpi-totale">
+            <div class="kpi-label">Totale</div>
+            <div class="kpi-value">{{ formatAmount(repData.total) }}</div>
+          </div>
+        </div>
+
+        <!-- Chart 12 mesi -->
+        <div class="chart-section">
+          <p class="section-title">Andamento mensile</p>
+          <div class="chart-wrap chart-annual">
+            <div class="chart-col chart-col-sm" *ngFor="let bar of repMonthBars">
+              <div class="bar-container bar-container-sm">
+                <div class="bar-inner" [style.height.px]="bar.totalH">
+                  <div class="bar-fattura"  [style.height.px]="bar.fatturaH"></div>
+                  <div class="bar-contanti" [style.height.px]="bar.contantiH"></div>
+                </div>
+              </div>
+              <span class="bar-label">{{ bar.label }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabella 12 mesi -->
+        <p class="section-title">Riepilogo mensile</p>
+        <div class="month-table">
+          <div class="table-header">
+            <span>Mese</span>
+            <span>Fattura</span>
+            <span>Contanti</span>
+            <span>Totale</span>
+          </div>
+          <div class="table-row" *ngFor="let bar of repMonthBars; let i = index"
+               (click)="goToMovimenti(i)"
+               [class.table-row-empty]="bar.total === 0">
+            <span class="table-month">{{ monthNames[i] }}</span>
+            <span class="table-fattura">{{ formatAmount(bar.fattura) }}</span>
+            <span class="table-contanti">{{ formatAmount(bar.contanti) }}</span>
+            <span class="table-total">{{ formatAmount(bar.total) }}</span>
+          </div>
+        </div>
+
+        <!-- Confronto anno precedente -->
+        <div class="delta-card" [class.delta-pos]="repDeltaPositive" [class.delta-neg]="!repDeltaPositive">
+          <div class="delta-label">VS ANNO PRECEDENTE ({{ repYear - 1 }})</div>
+          <div class="delta-value">{{ repDeltaPositive ? '+' : '' }}{{ repDeltaPct }}%</div>
+          <div class="delta-sub">{{ formatAmount(repPrevTotal) }} nel {{ repYear - 1 }}</div>
+        </div>
+
+      </ng-container>
+
+    </ng-container>
+
+  </div>
+
+  <ion-fab *ngIf="activeView === 'movimenti'" slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="apriModalNuovo()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

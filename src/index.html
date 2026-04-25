@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="utf-8"/>
+  <title>DAM Impianti</title>
+
+  <base href="/"/>
+
+  <meta name="color-scheme" content="dark"/>
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="msapplication-tap-highlight" content="no"/>
+
+  <!-- Google Fonts: Rajdhani (titoli/numeri) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/png" href="assets/icon/favicon.png"/>
+
+  <!-- PWA / Manifest -->
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <!-- iOS PWA support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="DAM Impianti">
+
+  <!-- Theme color (chrome address bar) -->
+  <meta name="theme-color" content="#2baa72" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#2baa72" media="(prefers-color-scheme: light)">
+
+  <!-- Apple touch icons -->
+  <link rel="apple-touch-icon" href="assets/icons/icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/icons/icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="assets/icons/icon-192x192.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="assets/icons/icon-512x512.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-96x96.png">
+
+  <!-- iOS Splash Screens -->
+  <!-- iPhone 16 Pro Max -->
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3)" href="assets/splash/apple-splash-1320x2868.png">
+  <!-- iPhone 16 / 15 Pro / 14 Pro -->
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)" href="assets/splash/apple-splash-1179x2556.png">
+  <!-- iPhone 14 / 13 / 12 -->
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)" href="assets/splash/apple-splash-1170x2532.png">
+  <!-- iPhone SE 3rd gen -->
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" href="assets/splash/apple-splash-750x1334.png">
+  <!-- iPhone 11 / XR -->
+  <link rel="apple-touch-startup-image" media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" href="assets/splash/apple-splash-828x1792.png">
+
+  <style>
+    #app-splash {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: #0f0f0f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    #app-splash.splash-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .splash-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      animation: splashFadeIn 0.6s ease forwards;
+    }
+
+    @keyframes splashFadeIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .splash-logo {
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 32px rgba(43, 170, 114, 0.35));
+    }
+
+    .splash-tagline {
+      font-family: 'Rajdhani', 'Arial Narrow', Arial, sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .splash-loader {
+      width: 120px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .splash-loader-bar {
+      height: 100%;
+      width: 40%;
+      background: #2baa72;
+      border-radius: 2px;
+      animation: splashLoader 1.2s ease-in-out infinite;
+    }
+
+    @keyframes splashLoader {
+      0%   { transform: translateX(-100%); }
+      50%  { transform: translateX(150%); }
+      100% { transform: translateX(150%); }
+    }
+  </style>
+</head>
+
+<body class="dark">
+  <!-- SPLASH SCREEN — rimossa da AppComponent dopo il bootstrap -->
+  <div id="app-splash">
+    <div class="splash-content">
+      <img src="assets/logo/logo-sfondo-black.png" alt="DAM Impianti" class="splash-logo">
+      <div class="splash-loader">
+        <div class="splash-loader-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <app-root></app-root>
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
+</body>
+
+</html>

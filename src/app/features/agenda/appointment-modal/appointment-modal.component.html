@@ -1,0 +1,183 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="annulla()">Annulla</ion-button>
+    </ion-buttons>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button strong (click)="salva()">Salva</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form">
+
+    <!-- ── Titolo ────────────────────────────────────────────── -->
+    <p class="field-label">Titolo (opzionale)</p>
+    <ion-item class="form-item">
+      <ion-input formControlName="title" placeholder="es. Dentista, Sopralluogo, Alessio…"></ion-input>
+    </ion-item>
+
+    <!-- ── Selettore modalità ────────────────────────────────── -->
+    <p class="field-label">Collega a</p>
+    <div class="link-mode-selector">
+      <button type="button"
+              class="link-mode-btn"
+              [class.active]="linkMode === 'client'"
+              (click)="setLinkMode('client')">
+        Cliente
+      </button>
+      <button type="button"
+              class="link-mode-btn"
+              [class.active]="linkMode === 'job'"
+              (click)="setLinkMode('job')">
+        Lavoro
+      </button>
+    </div>
+
+    <!-- ── Cliente (searchable) — visibile se linkMode = 'client' ── -->
+    <ng-container *ngIf="linkMode === 'client'">
+      <p class="field-label">Cliente</p>
+
+      <div class="client-input-wrap">
+        <div class="client-selected"
+             [class.placeholder]="!selectedClientName"
+             (click)="openClientSearch()">
+          <span class="selected-text">{{ selectedClientName || 'Cerca cliente…' }}</span>
+          <button type="button" class="clear-btn" *ngIf="selectedClientName" (click)="$event.stopPropagation(); clearClient()">×</button>
+        </div>
+      </div>
+
+      <div class="client-search-panel" *ngIf="showClientList">
+        <ion-searchbar
+          placeholder="Cerca per nome…"
+          (ionInput)="onClientSearch($any($event))"
+          (ionBlur)="closeClientList()"
+          animated
+          [debounce]="150">
+        </ion-searchbar>
+        <div class="client-list">
+          <div class="client-option"
+               *ngFor="let c of filteredClients"
+               (mousedown)="selectClient(c)">
+            {{ c.name }}
+          </div>
+          <div class="client-empty" *ngIf="filteredClients.length === 0">
+            Nessun cliente trovato
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ── Lavoro (searchable) — visibile se linkMode = 'job' ── -->
+    <ng-container *ngIf="linkMode === 'job'">
+      <p class="field-label">Lavoro</p>
+
+      <div class="client-input-wrap">
+        <div class="client-selected"
+             [class.placeholder]="!selectedJobDescription"
+             (click)="openJobSearch()">
+          <span class="selected-text">{{ selectedJobDescription || 'Cerca lavoro…' }}</span>
+          <button type="button" class="clear-btn" *ngIf="selectedJobDescription" (click)="$event.stopPropagation(); clearJob()">×</button>
+        </div>
+      </div>
+
+      <div class="client-search-panel" *ngIf="showJobList">
+        <ion-searchbar
+          placeholder="Cerca descrizione o cliente…"
+          (ionInput)="onJobSearch($any($event))"
+          (ionBlur)="closeJobList()"
+          animated
+          [debounce]="150">
+        </ion-searchbar>
+        <div class="client-list">
+          <div class="job-option"
+               *ngFor="let j of filteredJobs"
+               (mousedown)="selectJob(j)">
+            <span class="job-option-name">{{ j.description }}</span>
+            <span class="job-option-sub" *ngIf="j.clientName">{{ j.clientName }}</span>
+          </div>
+          <div class="client-empty" *ngIf="filteredJobs.length === 0">
+            Nessun lavoro trovato
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ── Data ──────────────────────────────────────────────── -->
+    <p class="field-label">Data *</p>
+    <ion-item class="form-item">
+      <ion-input type="date" formControlName="date"></ion-input>
+    </ion-item>
+    <ion-note color="danger" *ngIf="err('date', 'required')">Data obbligatoria</ion-note>
+
+    <!-- ── Ora inizio ────────────────────────────────────────── -->
+    <p class="field-label">Ora inizio *</p>
+    <ion-item class="form-item">
+      <ion-input type="time" formControlName="timeStart"></ion-input>
+    </ion-item>
+    <ion-note color="danger" *ngIf="err('timeStart', 'required')">Ora obbligatoria</ion-note>
+
+    <!-- ── Durata ─────────────────────────────────────────────── -->
+    <p class="field-label">Durata</p>
+    <ion-item class="form-item">
+      <ion-select formControlName="duration" interface="action-sheet" placeholder="Seleziona">
+        <ion-select-option *ngFor="let d of durations" [value]="d.value">
+          {{ d.label }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Durata personalizzata -->
+    <ng-container *ngIf="isCustomDuration">
+      <p class="field-label">Minuti personalizzati</p>
+      <ion-item class="form-item">
+        <ion-input type="number" formControlName="customDuration"
+                   placeholder="es. 150" min="5" step="5"></ion-input>
+      </ion-item>
+    </ng-container>
+
+    <!-- ── Tipo lavoro ────────────────────────────────────────── -->
+    <p class="field-label">Tipo lavoro</p>
+    <ion-item class="form-item">
+      <ion-input formControlName="workType" placeholder="es. Impianto elettrico"></ion-input>
+    </ion-item>
+
+    <!-- ── Indirizzo ──────────────────────────────────────────── -->
+    <p class="field-label">Indirizzo</p>
+    <ion-item class="form-item">
+      <ion-input formControlName="address" placeholder="Via, Città…"></ion-input>
+    </ion-item>
+
+    <!-- ── Note ──────────────────────────────────────────────── -->
+    <p class="field-label">Note</p>
+    <ion-item class="form-item">
+      <ion-textarea formControlName="notes" rows="3" placeholder="Annotazioni…"></ion-textarea>
+    </ion-item>
+
+    <!-- ── Stato ──────────────────────────────────────────────── -->
+    <p class="field-label">Stato</p>
+    <ion-item class="form-item">
+      <ion-select formControlName="status" interface="action-sheet">
+        <ion-select-option value="da_confermare">Da confermare</ion-select-option>
+        <ion-select-option value="confermato">Confermato</ion-select-option>
+        <ion-select-option value="completato">Completato</ion-select-option>
+        <ion-select-option value="annullato">Annullato</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+  </form>
+
+  <!-- ── Azioni ─────────────────────────────────────────────── -->
+  <div class="action-row">
+    <ion-button expand="block" (click)="salva()">
+      {{ isEditing ? 'Aggiorna' : 'Crea appuntamento' }}
+    </ion-button>
+
+    <ion-button expand="block" fill="outline" color="danger"
+                *ngIf="isEditing" (click)="elimina()">
+      Elimina appuntamento
+    </ion-button>
+  </div>
+</ion-content>

@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Lavori</ion-title>
+    <ion-button slot="end" fill="clear" (click)="apriFiltra()">
+      <ion-icon slot="icon-only" name="filter-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="activeFilter !== 'all'" class="filter-bar">
+    <span class="filter-chip">{{ filterLabel }}</span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page-content">
+
+    <!-- ── Sezione Da fare ──────────────────────────────────── -->
+    <ng-container *ngIf="showDaFare">
+      <div class="section-header" (click)="toggleDaFare()">
+        <span class="section-title">Da fare ({{ daFare.length }})</span>
+        <ion-icon [name]="daFareOpen ? 'chevron-down-outline' : 'chevron-forward-outline'" class="section-chevron"></ion-icon>
+      </div>
+
+      <div class="section-body" [class.open]="daFareOpen">
+        <div class="job-list" *ngIf="daFare.length > 0">
+          <div class="job-item" *ngFor="let j of daFare" (click)="vaiAlDettaglio(j.id!)">
+            <span class="badge badge-da-fare">Da fare</span>
+            <div class="job-info">
+              <div class="job-client">{{ j.clientName }}</div>
+              <div class="job-desc">{{ j.description }}</div>
+            </div>
+            <ion-icon name="chevron-forward-outline" class="chevron"></ion-icon>
+          </div>
+        </div>
+        <div class="section-empty" *ngIf="daFare.length === 0">Nessun lavoro da fare</div>
+      </div>
+    </ng-container>
+
+    <!-- ── Sezione Completati ─────────────────────────────── -->
+    <ng-container *ngIf="showCompletati">
+      <div class="section-header" (click)="toggleCompletati()">
+        <span class="section-title">Completati ({{ completati.length }})</span>
+        <ion-icon [name]="completatiOpen ? 'chevron-down-outline' : 'chevron-forward-outline'" class="section-chevron"></ion-icon>
+      </div>
+
+      <div class="section-body" [class.open]="completatiOpen">
+        <div class="job-list" *ngIf="completati.length > 0">
+          <div class="job-item" *ngFor="let j of completati" (click)="vaiAlDettaglio(j.id!)">
+            <span class="badge badge-completato">Completato</span>
+            <div class="job-info">
+              <div class="job-client">{{ j.clientName }}</div>
+              <div class="job-desc">{{ j.description }}</div>
+              <div class="job-date" *ngIf="j.completedAt">{{ formatDate(j.completedAt) }}</div>
+            </div>
+            <ion-icon name="chevron-forward-outline" class="chevron"></ion-icon>
+          </div>
+        </div>
+        <div class="section-empty" *ngIf="completati.length === 0">Nessun lavoro completato</div>
+      </div>
+    </ng-container>
+
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="apriModalNuovo()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

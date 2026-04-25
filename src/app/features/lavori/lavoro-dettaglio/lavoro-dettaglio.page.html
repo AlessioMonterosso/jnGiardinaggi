@@ -1,0 +1,138 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/lavori"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ job?.description ?? 'Lavoro' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="modificaLavoro()">
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="!loading && job">
+
+  <!-- ── Info ──────────────────────────────────────────────── -->
+  <p class="section-title">Informazioni</p>
+  <div class="info-card">
+
+    <!-- Cliente -->
+    <div class="info-row clickable" (click)="vaiAlCliente()">
+      <ion-icon name="person-outline"></ion-icon>
+      <div class="info-content">
+        <span class="info-sub">Cliente</span>
+        <span class="info-value link">{{ job.clientName }}</span>
+      </div>
+    </div>
+
+    <!-- Stato -->
+    <div class="info-row">
+      <div class="info-content">
+        <span class="info-sub">Stato</span>
+        <span class="badge" [class.badge-da-fare]="job.status === 'da_fare'"
+                            [class.badge-completato]="job.status === 'completato'">
+          {{ job.status === 'completato' ? 'Completato' : 'Da fare' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Data completamento -->
+    <div class="info-row" *ngIf="job.completedAt">
+      <div class="info-content">
+        <span class="info-sub">Completato il</span>
+        <span class="info-value">{{ formatDate(job.completedAt) }}</span>
+      </div>
+    </div>
+
+    <!-- Descrizione -->
+    <div class="info-row">
+      <div class="info-content">
+        <span class="info-sub">Descrizione</span>
+        <span class="info-value desc">{{ job.description }}</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Card Ore lavorate ──────────────────────────────────── -->
+  <div class="hours-card">
+    <div class="hours-label">Ore lavorate</div>
+    <div class="hours-value">{{ totalHoursWorked }}</div>
+    <div class="hours-sub">solo appuntamenti completati</div>
+  </div>
+
+  <!-- ── Segna completato ───────────────────────────────────── -->
+  <div class="complete-btn-wrap" *ngIf="job.status === 'da_fare'">
+    <ion-button expand="block" class="btn-complete" (click)="segnaCompletato()">
+      <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+      Segna come completato
+    </ion-button>
+  </div>
+
+  <!-- ── Pagamenti ──────────────────────────────────────────── -->
+  <p class="section-title">Pagamenti</p>
+  <div class="section-card">
+    <div class="payment-item" *ngFor="let p of payments">
+      <div class="pay-dot" [class.dot-fattura]="p.paymentMethod === 'fattura'"
+                           [class.dot-contanti]="p.paymentMethod === 'contanti'"></div>
+      <div class="pay-info">
+        <span class="pay-label">{{ getPaymentTypeLabel(p.type) }} · {{ getPaymentMethodLabel(p.paymentMethod) }}</span>
+        <span class="pay-date">{{ formatDate(p.date) }}</span>
+      </div>
+      <span class="pay-amount"
+            [class.amount-fattura]="p.paymentMethod === 'fattura'"
+            [class.amount-contanti]="p.paymentMethod === 'contanti'">
+        {{ formatAmount(p.amount) }}
+      </span>
+    </div>
+
+    <div class="pay-empty" *ngIf="payments.length === 0">Nessun pagamento registrato</div>
+
+    <!-- Totale -->
+    <div class="pay-total" *ngIf="payments.length > 0">
+      <div class="pay-total-row" *ngIf="totFattura > 0">
+        <span class="pay-total-label">Fattura</span>
+        <span class="pay-total-value fattura">{{ formatAmount(totFattura) }}</span>
+      </div>
+      <div class="pay-total-row" *ngIf="totContanti > 0">
+        <span class="pay-total-label">Contanti</span>
+        <span class="pay-total-value contanti">{{ formatAmount(totContanti) }}</span>
+      </div>
+      <div class="pay-total-row total-row">
+        <span class="pay-total-label">Totale</span>
+        <span class="pay-total-value">{{ formatAmount(totale) }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Appuntamenti ───────────────────────────────────────── -->
+  <p class="section-title">Appuntamenti</p>
+  <div class="section-card">
+    <div class="appointment-item"
+         *ngFor="let a of appointments; trackBy: trackByAppId">
+      <div class="appt-left">
+        <div class="appt-date">{{ a.date | date:'dd MMM yyyy' }} · {{ a.timeStart }}</div>
+        <div class="appt-title">{{ a.title || a.workType || '—' }}</div>
+      </div>
+      <div class="appt-right">
+        <div class="appt-dur">{{ a.duration }}min</div>
+        <span class="appt-status" [class]="'status-' + a.status">{{ getStatusLabel(a.status) }}</span>
+      </div>
+    </div>
+    <div class="pay-empty" *ngIf="appointments.length === 0">Nessun appuntamento</div>
+  </div>
+
+  <!-- ── Elimina ────────────────────────────────────────────── -->
+  <div class="delete-row">
+    <ion-button expand="block" fill="outline" color="danger" (click)="eliminaLavoro()">
+      Elimina lavoro
+    </ion-button>
+  </div>
+
+</ion-content>
+
+<ion-content *ngIf="loading">
+  <div class="loading-state">Caricamento…</div>
+</ion-content>

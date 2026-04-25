@@ -1,0 +1,125 @@
+<ion-header [translucent]="false">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <img src="assets/logo/logo.png" alt="DAM Impianti" class="header-logo" />
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <div class="avatar" (click)="openUserMenu()">DA</div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  @if (!networkStatus.isOnline()) {
+    <div class="offline-banner">
+      <ion-icon name="cloud-offline-outline"></ion-icon>
+      Modalità offline — dati aggiornati all'ultima sincronizzazione
+    </div>
+  }
+
+  @if (installPrompt.canInstall()) {
+    <div class="install-banner" (click)="installApp()">
+      <ion-icon name="download-outline"></ion-icon>
+      <span>Installa DAM Impianti — accesso rapido dalla schermata home</span>
+      <ion-icon name="close-outline" (click)="dismissInstall($event)"></ion-icon>
+    </div>
+  }
+
+  <div class="home-wrap">
+
+    <!-- ── Greeting ──────────────────────────────────────────── -->
+    <p class="greeting">{{ greeting }}, <strong>Daniele</strong></p>
+
+    <!-- ═══════════════ LOADING STATE ═══════════════ -->
+    <ng-container *ngIf="isLoading">
+
+      <!-- skeleton totale mese -->
+      <div class="card card-total">
+        <ion-skeleton-text animated class="skel skel-label"></ion-skeleton-text>
+        <ion-skeleton-text animated class="skel skel-value"></ion-skeleton-text>
+      </div>
+
+      <!-- skeleton due card -->
+      <div class="cards-row">
+        <div class="card">
+          <ion-skeleton-text animated class="skel skel-label"></ion-skeleton-text>
+          <ion-skeleton-text animated class="skel skel-value-sm"></ion-skeleton-text>
+        </div>
+        <div class="card">
+          <ion-skeleton-text animated class="skel skel-label"></ion-skeleton-text>
+          <ion-skeleton-text animated class="skel skel-value-sm"></ion-skeleton-text>
+        </div>
+      </div>
+
+      <!-- skeleton lista -->
+      <p class="section-title">OGGI</p>
+      <div class="list-item" *ngFor="let _ of [1,2]">
+        <ion-skeleton-text animated class="skel skel-time"></ion-skeleton-text>
+        <div class="item-info">
+          <ion-skeleton-text animated class="skel skel-name"></ion-skeleton-text>
+          <ion-skeleton-text animated class="skel skel-sub"></ion-skeleton-text>
+        </div>
+      </div>
+
+    </ng-container>
+
+    <!-- ═══════════════ CONTENT ═══════════════════════ -->
+    <ng-container *ngIf="!isLoading">
+
+      <!-- ── Card totale mese ────────────────────────── -->
+      <div class="card card-total">
+        <p class="card-label">INCASSATO QUESTO MESE</p>
+        <p class="card-value total-value">{{ fmt(monthlyTotals.total) }}</p>
+      </div>
+
+      <!-- ── Fattura + Contanti ──────────────────────── -->
+      <div class="cards-row">
+        <div class="card">
+          <p class="card-label">FATTURA</p>
+          <p class="card-value green-value">{{ fmt(monthlyTotals.fattura) }}</p>
+        </div>
+        <div class="card">
+          <p class="card-label">CONTANTI</p>
+          <p class="card-value cash-value">{{ fmt(monthlyTotals.contanti) }}</p>
+        </div>
+      </div>
+
+      <!-- ── Oggi ───────────────────────────────────── -->
+      <p class="section-title">OGGI</p>
+
+      <ng-container *ngIf="todayAppointments.length > 0; else noApps">
+        <div class="list-item" *ngFor="let app of todayAppointments">
+          <span class="item-time">{{ app.timeStart }}</span>
+          <div class="item-info">
+            <span class="item-name">{{ app.title || app.clientName }}</span>
+            <span class="item-sub">{{ app.workType }}</span>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #noApps>
+        <p class="empty-msg">Nessun appuntamento oggi</p>
+      </ng-template>
+
+      <!-- ── Ultimi pagamenti ───────────────────────── -->
+      <p class="section-title">ULTIMI PAGAMENTI</p>
+
+      <ng-container *ngIf="lastPayments.length > 0; else noPayments">
+        <div class="list-item" *ngFor="let p of lastPayments">
+          <span class="dot" [class.dot-green]="p.paymentMethod === 'fattura'"
+                            [class.dot-cash]="p.paymentMethod === 'contanti'"></span>
+          <div class="item-info">
+            <span class="item-name">{{ p.title || p.clientName }}</span>
+            <span class="item-sub">{{ p.paymentMethod === 'fattura' ? 'Fattura' : 'Contanti' }}</span>
+          </div>
+          <span class="item-amount">{{ fmt(p.amount) }}</span>
+        </div>
+      </ng-container>
+      <ng-template #noPayments>
+        <p class="empty-msg">Nessun pagamento registrato</p>
+      </ng-template>
+
+    </ng-container>
+
+  </div>
+</ion-content>

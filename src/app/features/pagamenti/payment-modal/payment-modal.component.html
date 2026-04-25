@@ -1,0 +1,121 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="annulla()">Annulla</ion-button>
+    </ion-buttons>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button strong (click)="salva()">Salva</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form">
+
+    <!-- ── Descrizione ───────────────────────────────────────── -->
+    <p class="field-label">Descrizione</p>
+    <ion-item class="form-item">
+      <ion-input formControlName="title" placeholder="es. Mario Rossi, Fornitura materiali…"></ion-input>
+    </ion-item>
+
+    <!-- ── Cliente (searchable) ─────────────────────────────── -->
+    <p class="field-label">Cliente</p>
+    <div class="client-input-wrap">
+      <div class="client-selected"
+           [class.placeholder]="!selectedClientName"
+           (click)="openClientSearch()">
+        {{ selectedClientName || 'Cerca cliente…' }}
+      </div>
+    </div>
+
+    <div class="client-search-panel" *ngIf="showClientList">
+      <ion-searchbar
+        placeholder="Cerca per nome…"
+        (ionInput)="onClientSearch($any($event))"
+        (ionBlur)="closeClientList()"
+        animated
+        [debounce]="150">
+      </ion-searchbar>
+      <div class="client-list">
+        <div class="client-option"
+             *ngFor="let c of filteredClients"
+             (mousedown)="selectClient(c)">
+          {{ c.name }}
+        </div>
+        <div class="client-empty" *ngIf="filteredClients.length === 0">
+          Nessun cliente trovato
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Lavoro (opzionale) ───────────────────────────────── -->
+    <p class="field-label">Lavoro (opzionale)</p>
+    <div class="select-wrap">
+      <select class="native-select" formControlName="jobId">
+        <option [value]="null">— Nessun lavoro —</option>
+        <option *ngFor="let j of clientJobs" [value]="j.id">{{ j.description }}</option>
+      </select>
+      <div class="select-empty" *ngIf="clientJobs.length === 0 && form.get('clientId')?.value">
+        Nessun lavoro aperto per questo cliente
+      </div>
+    </div>
+
+    <!-- ── Tipo ─────────────────────────────────────────────── -->
+    <p class="field-label">Tipo *</p>
+    <ion-segment formControlName="type" class="seg-tipo">
+      <ion-segment-button value="acconto">
+        <ion-label>Acconto</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="saldo">
+        <ion-label>Saldo</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- ── Metodo ───────────────────────────────────────────── -->
+    <p class="field-label">Metodo *</p>
+    <ion-segment formControlName="paymentMethod" class="seg-metodo">
+      <ion-segment-button value="fattura" class="seg-fattura">
+        <ion-label>Fattura</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="contanti" class="seg-contanti">
+        <ion-label>Contanti</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- ── Importo ──────────────────────────────────────────── -->
+    <p class="field-label">Importo *</p>
+    <ion-item class="form-item amount-item">
+      <span class="euro-prefix">€</span>
+      <ion-input type="number" formControlName="amount"
+                 placeholder="0" min="1" inputmode="numeric"></ion-input>
+    </ion-item>
+    <ion-note color="danger" *ngIf="err('amount', 'required')">Importo obbligatorio</ion-note>
+    <ion-note color="danger" *ngIf="err('amount', 'min')">Importo deve essere > 0</ion-note>
+
+    <!-- ── Data ─────────────────────────────────────────────── -->
+    <p class="field-label">Data *</p>
+    <ion-item class="form-item">
+      <ion-input type="date" formControlName="date"></ion-input>
+    </ion-item>
+    <ion-note color="danger" *ngIf="err('date', 'required')">Data obbligatoria</ion-note>
+
+    <!-- ── Note ─────────────────────────────────────────────── -->
+    <p class="field-label">Note</p>
+    <ion-item class="form-item">
+      <ion-textarea formControlName="notes" rows="3" placeholder="Annotazioni…"></ion-textarea>
+    </ion-item>
+
+  </form>
+
+  <!-- ── Azioni ───────────────────────────────────────────── -->
+  <div class="action-row">
+    <ion-button expand="block" (click)="salva()">
+      {{ isEditing ? 'Aggiorna' : 'Registra pagamento' }}
+    </ion-button>
+    <ion-button expand="block" fill="outline" color="danger"
+                *ngIf="isEditing" (click)="elimina()">
+      Elimina pagamento
+    </ion-button>
+  </div>
+</ion-content>

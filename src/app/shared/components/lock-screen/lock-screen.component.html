@@ -1,0 +1,23 @@
+<div class="lock-overlay">
+  <div class="lock-content">
+
+    <img [src]="logoSrc" alt="DAM Impianti" class="lock-logo" />
+    <p class="lock-title">Inserisci il PIN</p>
+
+    <div class="pin-dots" [class.shake]="isShaking">
+      <div class="dot" *ngFor="let i of [0,1,2,3]" [class.filled]="pin.length > i"></div>
+    </div>
+
+    <p class="lock-error">{{ errorMsg || '&nbsp;' }}</p>
+
+    <div class="pin-pad">
+      <button class="pad-btn" *ngFor="let n of digits" (click)="pressDigit(n.toString())">{{ n }}</button>
+      <div></div>
+      <button class="pad-btn" (click)="pressDigit('0')">0</button>
+      <button class="pad-btn pad-icon" (click)="deleteDigit()">
+        <ion-icon name="backspace-outline"></ion-icon>
+      </button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="annulla()">Annulla</ion-button>
+    </ion-buttons>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button strong (click)="salva()">Salva</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form">
+
+    <!-- Nome -->
+    <p class="field-label">Nome *</p>
+    <ion-item class="form-item">
+      <ion-input formControlName="name" placeholder="Mario Rossi"></ion-input>
+    </ion-item>
+    <ion-note color="danger" *ngIf="err('name', 'required')">Nome obbligatorio</ion-note>
+
+    <!-- Telefono -->
+    <p class="field-label">Telefono</p>
+    <ion-item class="form-item">
+      <ion-input type="tel" formControlName="phone" placeholder="+39 333 0000000"></ion-input>
+    </ion-item>
+    <ion-note color="danger" *ngIf="err('phone', 'required')">Telefono obbligatorio</ion-note>
+
+    <!-- Indirizzo -->
+    <p class="field-label">Indirizzo</p>
+    <ion-item class="form-item">
+      <ion-input formControlName="address" placeholder="Via, Città…"></ion-input>
+    </ion-item>
+
+    <!-- Email -->
+    <p class="field-label">Email</p>
+    <ion-item class="form-item">
+      <ion-input type="email" formControlName="email" placeholder="mario@example.com"></ion-input>
+    </ion-item>
+    <ion-note color="danger" *ngIf="err('email', 'email')">Email non valida</ion-note>
+
+    <!-- Note -->
+    <p class="field-label">Note</p>
+    <ion-item class="form-item">
+      <ion-textarea formControlName="notes" rows="3" placeholder="Annotazioni…"></ion-textarea>
+    </ion-item>
+
+  </form>
+
+  <!-- Azioni -->
+  <div class="action-row">
+    <ion-button expand="block" (click)="salva()">
+      {{ isEditing ? 'Aggiorna' : 'Crea cliente' }}
+    </ion-button>
+    <ion-button expand="block" fill="outline" color="danger"
+                *ngIf="isEditing" (click)="elimina()">
+      Elimina cliente
+    </ion-button>
+  </div>
+</ion-content>

@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/clienti"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ client?.name ?? 'Cliente' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="modificaCliente()">
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="!loading && client">
+
+  <!-- ── Info ──────────────────────────────────────────────── -->
+  <p class="section-title">Informazioni</p>
+  <div class="info-card">
+    <div class="info-row" *ngIf="client.phone" (click)="callPhone()">
+      <ion-icon name="call-outline"></ion-icon>
+      <span class="info-value link">{{ client.phone }}</span>
+    </div>
+    <div class="info-row" *ngIf="client.address">
+      <ion-icon name="location-outline"></ion-icon>
+      <span class="info-value">{{ client.address }}</span>
+    </div>
+    <div class="info-row" *ngIf="client.email">
+      <ion-icon name="mail-outline"></ion-icon>
+      <span class="info-value">{{ client.email }}</span>
+    </div>
+    <div class="info-row notes-row" *ngIf="client.notes">
+      <ion-icon name="document-text-outline"></ion-icon>
+      <span class="info-value notes">{{ client.notes }}</span>
+    </div>
+    <div class="info-empty" *ngIf="!client.phone && !client.address && !client.email && !client.notes">
+      Nessun dettaglio
+    </div>
+  </div>
+
+  <!-- ── Card Ore lavorate ──────────────────────────────────── -->
+  <div class="hours-card">
+    <div class="hours-label">Ore lavorate</div>
+    <div class="hours-value">{{ totalHoursWorked }}</div>
+    <div class="hours-sub">solo appuntamenti completati</div>
+  </div>
+
+  <!-- ── Lavori ─────────────────────────────────────────────── -->
+  <p class="section-title">Ultimi lavori</p>
+  <div class="section-card">
+    <div class="list-item" *ngFor="let job of jobs">
+      <div class="list-item-main">
+        <span class="list-item-title">{{ job.description }}</span>
+        <span class="list-item-meta">{{ formatDate(job.createdAt) }}</span>
+      </div>
+      <span class="badge" [style.color]="getJobStatusColor(job.status)">
+        {{ getJobStatusLabel(job.status) }}
+      </span>
+    </div>
+    <div class="list-empty" *ngIf="jobs.length === 0">Nessun lavoro registrato</div>
+  </div>
+
+  <!-- ── Pagamenti ──────────────────────────────────────────── -->
+  <p class="section-title">Ultimi pagamenti</p>
+  <div class="section-card">
+    <div class="list-item" *ngFor="let p of payments">
+      <div class="list-item-main">
+        <span class="list-item-title">{{ getPaymentTypeLabel(p.type) }}</span>
+        <span class="list-item-meta">{{ formatDate(p.date) }}</span>
+      </div>
+      <span class="amount" [style.color]="getPaymentMethodColor(p.paymentMethod)">
+        {{ formatAmount(p.amount) }}
+      </span>
+    </div>
+    <div class="list-empty" *ngIf="payments.length === 0">Nessun pagamento registrato</div>
+  </div>
+
+  <!-- ── Elimina ────────────────────────────────────────────── -->
+  <div class="delete-row">
+    <ion-button expand="block" fill="outline" color="danger" (click)="eliminaCliente()">
+      Elimina cliente
+    </ion-button>
+  </div>
+
+</ion-content>
+
+<ion-content *ngIf="loading">
+  <div class="loading-state">Caricamento…</div>
+</ion-content>

@@ -1,0 +1,412 @@
+// ── Loading ────────────────────────────────────────────────────
+.agenda-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 0;
+}
+
+.loading-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  animation: dotPulse 1.2s ease-in-out infinite;
+
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.4s; }
+}
+
+@keyframes dotPulse {
+  0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+  40%            { opacity: 1;   transform: scale(1); }
+}
+
+// ── Header ────────────────────────────────────────────────────
+.nav-label {
+  flex: 1;
+  text-align: center;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #f0f0f0;
+  text-transform: capitalize;
+  padding: 0 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+ion-fab-button {
+  --background: var(--color-primary);
+  --background-activated: #23916b;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  VISTA GIORNALIERA
+//  ⚠️  Filosofia "zero iOS": nessun overflow, nessun position,
+//      nessun z-index sui container — identico alla vista Mese
+//      che funziona su tutti i dispositivi.
+// ══════════════════════════════════════════════════════════════
+
+// Strip settimanale — grid 7 colonne fisso (come mese)
+// NON usa overflow-x:auto → nessun UIScrollView nativo su iOS
+.week-strip {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  padding: 12px 12px 8px;
+  background: var(--color-surface);
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+.day-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 4px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  .chip-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: #6b6b6b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .chip-num {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #c0c0c0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  &.today-ring .chip-num {
+    color: var(--color-primary);
+    border: 1.5px solid var(--color-primary);
+  }
+
+  &.active {
+    .chip-name { color: #fff; }
+    .chip-num {
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+    }
+  }
+}
+
+// Lista appuntamenti giornalieri — solo padding, nessun position/z-index
+.day-list {
+  padding: 12px;
+}
+
+.app-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  background: var(--color-surface);
+  border: 0.5px solid var(--color-border);
+  border-left: 3px solid var(--color-primary);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+
+  &:active { opacity: 0.85; }
+}
+
+.app-time-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 44px;
+  flex-shrink: 0;
+  gap: 2px;
+}
+
+.app-hour {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.app-dur {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  color: #6b6b6b;
+}
+
+.app-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.app-client {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #f0f0f0;
+  margin-bottom: 2px;
+}
+
+.app-type {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: #9a9a9a;
+}
+
+.app-addr {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: #6b6b6b;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-badge {
+  flex-shrink: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  align-self: flex-start;
+}
+
+.empty-day {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: #6b6b6b;
+  text-align: center;
+  padding: 32px 0;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  VISTA SETTIMANALE
+//  ⚠️  Filosofia "zero iOS": nessun position/z-index/overflow sui
+//      container. Solo le colonne giorno e la colonna ore tengono
+//      position:relative (servono per i figli position:absolute).
+//      Rimosso position:sticky dall'header — sacrificio UX minimo
+//      per eliminare il compositor layer che bloccava i touch su iOS.
+// ══════════════════════════════════════════════════════════════
+$hour-h: 60px;
+$time-col-w: 44px;
+
+// Wrapper — puro contenitore, ZERO proprietà di layout/posizione
+.week-grid-wrap {
+  // ion-content gestisce lo scroll — qui niente overflow/position/z-index
+}
+
+// Header colonne — statico, niente sticky/z-index
+.week-grid-header {
+  display: flex;
+  background: var(--color-surface);
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+.wg-spacer {
+  width: $time-col-w;
+  flex-shrink: 0;
+}
+
+.wg-day-hdr {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0;
+  min-width: 0;
+
+  .wghdr-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    color: #6b6b6b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .wghdr-num {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #c0c0c0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-top: 2px;
+  }
+
+  &.wg-today .wghdr-num {
+    color: #fff;
+    background: var(--color-primary);
+  }
+
+  &.wg-selected:not(.wg-today) .wghdr-num {
+    color: var(--color-primary);
+    border: 1.5px solid var(--color-primary);
+  }
+}
+
+// Corpo griglia — solo flex, niente position
+.week-grid-body {
+  display: flex;
+}
+
+// Colonna ore — position:relative NECESSARIO per i label absolute
+.wg-time-col {
+  width: $time-col-w;
+  flex-shrink: 0;
+  position: relative;
+  min-height: calc(14 * #{$hour-h});
+}
+
+.wg-hour-label {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 9px;
+  color: #6b6b6b;
+  text-align: right;
+  padding-right: 6px;
+  transform: translateY(-6px);
+}
+
+// Colonne giorno — position:relative NECESSARIO per linee e blocchi absolute
+.wg-day-col {
+  flex: 1;
+  position: relative;
+}
+
+// Linee orarie
+.wg-hour-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: 0.5px solid var(--color-border);
+}
+
+// Blocco appuntamento nella griglia — niente z-index
+.wg-app-block {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  background: rgba(43, 170, 114, 0.18);
+  border-left: 3px solid var(--color-primary);
+  border-radius: 4px;
+  padding: 3px 5px;
+  overflow: hidden;
+  cursor: pointer;
+
+  &:active { opacity: 0.8; }
+}
+
+.wapp-time {
+  display: block;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.2;
+}
+
+.wapp-name {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: #f0f0f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  VISTA MENSILE
+// ══════════════════════════════════════════════════════════════
+.month-wrap {
+  padding: 8px;
+}
+
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.month-wday {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  color: #6b6b6b;
+  text-align: center;
+  padding: 6px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.month-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 52px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.12s;
+
+  &:active { opacity: 0.7; }
+
+  &.other-month .mcell-num { color: #3a3a3a; }
+
+  &.today-cell .mcell-num {
+    background: var(--color-primary);
+    color: #fff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &.selected-cell:not(.today-cell) {
+    background: rgba(43, 170, 114, 0.1);
+    .mcell-num { color: var(--color-primary); }
+  }
+}
+
+.mcell-num {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #c0c0c0;
+  line-height: 1;
+}
+
+.mcell-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  flex-shrink: 0;
+}

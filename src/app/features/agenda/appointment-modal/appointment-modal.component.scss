@@ -1,0 +1,194 @@
+// ── Etichette campi ───────────────────────────────────────────
+.field-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #6b6b6b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 20px 0 4px;
+}
+
+// ── Item form ─────────────────────────────────────────────────
+.form-item {
+  --background: var(--color-surface);
+  --border-color: var(--color-border);
+  --border-radius: 10px;
+  --padding-start: 14px;
+  --inner-padding-end: 14px;
+  border-radius: 10px;
+  border: 0.5px solid var(--color-border);
+  margin-bottom: 2px;
+
+  ion-input, ion-select, ion-textarea {
+    --color: #f0f0f0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+  }
+}
+
+ion-note {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  margin-left: 4px;
+}
+
+// ── Selettore modalità (Cliente | Lavoro) ─────────────────────
+.link-mode-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.link-mode-btn {
+  flex: 1;
+  padding: 10px 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  border: 0.5px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-surface);
+  color: #6b6b6b;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &.active {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    background: rgba(43, 170, 114, 0.08);
+  }
+}
+
+// ── Cliente / Lavoro searchable ───────────────────────────────
+.client-input-wrap {
+  border: 0.5px solid var(--color-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.client-selected {
+  padding: 0 14px;
+  background: var(--color-surface);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #f0f0f0;
+  cursor: pointer;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  &.placeholder { color: #6b6b6b; }
+
+  .selected-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.clear-btn {
+  background: none;
+  border: none;
+  color: #6b6b6b;
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &:active { color: #f0f0f0; }
+}
+
+.client-search-panel {
+  background: var(--color-surface);
+  border: 0.5px solid var(--color-primary);
+  border-radius: 10px;
+  margin-top: 6px;
+  overflow: hidden;
+
+  ion-searchbar {
+    --background: #222;
+    --color: #f0f0f0;
+    --placeholder-color: #6b6b6b;
+    --icon-color: #6b6b6b;
+    --border-radius: 0;
+    padding: 0;
+  }
+}
+
+.client-list {
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.client-option {
+  padding: 12px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #f0f0f0;
+  border-top: 0.5px solid var(--color-border);
+  cursor: pointer;
+
+  &:first-child { border-top: none; }
+  &:active { background: rgba(43, 170, 114, 0.12); }
+}
+
+// ── Job option (descrizione + cliente secondario) ─────────────
+.job-option {
+  padding: 10px 16px;
+  border-top: 0.5px solid var(--color-border);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  &:first-child { border-top: none; }
+  &:active { background: rgba(43, 170, 114, 0.12); }
+}
+
+.job-option-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #f0f0f0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.job-option-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: #6b6b6b;
+}
+
+.client-empty {
+  padding: 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: #6b6b6b;
+  text-align: center;
+}
+
+// ── Azioni ────────────────────────────────────────────────────
+.action-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 32px;
+  padding-bottom: 16px;
+
+  ion-button {
+    --border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+
+    &:first-child {
+      --background: var(--color-primary);
+      --color: #fff;
+    }
+  }
+}

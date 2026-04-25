@@ -1,0 +1,54 @@
+// ── Etichette campi ───────────────────────────────────────────
+.field-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #6b6b6b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 20px 0 4px;
+}
+
+// ── Item form ─────────────────────────────────────────────────
+.form-item {
+  --background: var(--color-surface);
+  --border-color: var(--color-border);
+  --border-radius: 10px;
+  --padding-start: 14px;
+  --inner-padding-end: 14px;
+  border-radius: 10px;
+  border: 0.5px solid var(--color-border);
+  margin-bottom: 2px;
+
+  ion-input, ion-textarea {
+    --color: #f0f0f0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+  }
+}
+
+ion-note {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  margin-left: 4px;
+}
+
+// ── Azioni ────────────────────────────────────────────────────
+.action-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 32px;
+  padding-bottom: 16px;
+
+  ion-button {
+    --border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+
+    &:first-child {
+      --background: var(--color-primary);
+      --color: #fff;
+    }
+  }
+}

@@ -1,0 +1,58 @@
+<ion-header [translucent]="false">
+  <ion-toolbar>
+    <ion-title>{{ stepTitle }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button *ngIf="step !== 'menu'" (click)="goBack()" fill="clear">Indietro</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()" fill="clear">
+        <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- MENU -->
+  <ng-container *ngIf="step === 'menu'">
+    <div class="menu-wrap">
+      <div class="status-card" [class.active]="pinSet">
+        <p class="status-label">BLOCCO APP</p>
+        <p class="status-value">{{ pinSet ? 'Attivo' : 'Non attivo' }}</p>
+      </div>
+      <p class="menu-hint" *ngIf="!pinSet">
+        Imposta un PIN a 4 cifre per proteggere l'accesso all'app.
+      </p>
+      <button class="menu-btn" (click)="startSetup()">{{ pinSet ? 'Cambia PIN' : 'Imposta PIN' }}</button>
+      <button class="menu-btn menu-btn-danger" *ngIf="pinSet" (click)="startDisable()">Disattiva blocco</button>
+    </div>
+  </ng-container>
+
+  <!-- PIN PAD -->
+  <ng-container *ngIf="step !== 'menu'">
+    <div class="pinpad-wrap">
+      <p class="pinpad-hint">
+        <ng-container *ngIf="step === 'enter-new'">Scegli un PIN a 4 cifre</ng-container>
+        <ng-container *ngIf="step === 'confirm-new'">Inserisci di nuovo il PIN</ng-container>
+        <ng-container *ngIf="step === 'enter-current'">Inserisci il PIN attuale per disattivare</ng-container>
+      </p>
+
+      <div class="pin-dots" [class.shake]="isShaking">
+        <div class="dot" *ngFor="let i of [0,1,2,3]" [class.filled]="pin.length > i"></div>
+      </div>
+
+      <p class="pin-error">{{ errorMsg || '&nbsp;' }}</p>
+
+      <div class="pin-pad">
+        <button class="pad-btn" *ngFor="let n of digits" (click)="pressDigit(n.toString())">{{ n }}</button>
+        <div></div>
+        <button class="pad-btn" (click)="pressDigit('0')">0</button>
+        <button class="pad-btn pad-icon" (click)="deleteDigit()">
+          <ion-icon name="backspace-outline"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </ng-container>
+
+</ion-content>

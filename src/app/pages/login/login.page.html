@@ -1,0 +1,32 @@
+<ion-content class="login-content">
+  <div class="login-container">
+    <div class="logo">
+      <img [src]="themeService.isDark() ? 'assets/logo/logo-sfondo-black.png' : 'assets/logo/logo.png'" alt="DAM Impianti" class="logo-img" />
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ion-item class="login-item">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="form.get('email')?.touched && form.get('email')?.hasError('required')">
+        Email obbligatoria
+      </ion-note>
+      <ion-note color="danger" *ngIf="form.get('email')?.touched && form.get('email')?.hasError('email')">
+        Email non valida
+      </ion-note>
+
+      <ion-item class="login-item">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="form.get('password')?.touched && form.get('password')?.hasError('required')">
+        Password obbligatoria
+      </ion-note>
+
+      <ion-button expand="block" type="submit" class="login-btn" [disabled]="form.invalid">
+        Accedi
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

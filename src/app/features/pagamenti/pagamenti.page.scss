@@ -1,0 +1,384 @@
+// ── Year nav ──────────────────────────────────────────────────
+.year-nav {
+  margin-bottom: 16px;
+}
+
+// ── Annual chart ──────────────────────────────────────────────
+.chart-annual {
+  gap: 3px;
+  padding: 12px 8px 8px;
+}
+
+.chart-col-sm {
+  flex: 1;
+}
+
+.bar-container-sm {
+  height: 50px;
+}
+
+// ── Month table ───────────────────────────────────────────────
+.month-table {
+  background: var(--color-surface);
+  border: 0.5px solid var(--color-border);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  padding: 9px 14px;
+  border-bottom: 0.5px solid var(--color-border);
+
+  span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--ion-color-medium);
+
+    &:not(:first-child) { text-align: right; }
+  }
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  padding: 11px 14px;
+  border-bottom: 0.5px solid var(--color-border);
+  cursor: pointer;
+
+  &:last-child { border-bottom: none; }
+  &:active { background: rgba(255,255,255,0.03); }
+
+  &.table-row-empty { opacity: 0.45; }
+}
+
+.table-month {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ion-text-color);
+}
+
+.table-fattura {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-align: right;
+}
+
+.table-contanti {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-cash);
+  text-align: right;
+}
+
+.table-total {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ion-text-color);
+  text-align: right;
+}
+
+// ── Delta card ────────────────────────────────────────────────
+.delta-card {
+  background: var(--color-surface);
+  border: 0.5px solid var(--color-border);
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 24px;
+  text-align: center;
+
+  &.delta-pos { border-color: var(--color-primary); }
+  &.delta-neg { border-color: #e55353; }
+}
+
+.delta-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ion-color-medium);
+  margin-bottom: 8px;
+}
+
+.delta-value {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 6px;
+
+  .delta-pos & { color: var(--color-primary); }
+  .delta-neg & { color: #e55353; }
+}
+
+.delta-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: var(--ion-color-medium);
+}
+
+// ── FAB ───────────────────────────────────────────────────────
+ion-fab-button {
+  --background: var(--color-primary);
+  --background-activated: #23916b;
+}
+
+// ── Month toolbar ─────────────────────────────────────────────
+.month-toolbar {
+  --background: var(--ion-toolbar-background);
+}
+
+.segment-toolbar {
+  --background: var(--ion-toolbar-background);
+
+  ion-segment {
+    --background: transparent;
+    padding: 4px 16px;
+  }
+
+  ion-segment-button {
+    --color: var(--ion-color-medium);
+    --color-checked: #ffffff;
+    --indicator-color: var(--color-primary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+  }
+}
+
+.month-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px 0;
+
+  ion-button {
+    --color: #9a9a9a;
+    --padding-start: 4px;
+    --padding-end: 4px;
+  }
+}
+
+.month-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #f0f0f0;
+  min-width: 160px;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+// ── Page content ──────────────────────────────────────────────
+.page-content {
+  padding: 16px;
+}
+
+// ── KPI row ───────────────────────────────────────────────────
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.kpi-card {
+  background: var(--color-surface);
+  border: 0.5px solid var(--color-border);
+  border-radius: 14px;
+  padding: 14px 12px;
+}
+
+.kpi-fattura  { border-color: var(--color-primary); }
+.kpi-contanti { border-color: var(--color-cash); }
+.kpi-totale   { border-color: #4a4a4a; }
+
+.kpi-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #6b6b6b;
+  margin-bottom: 6px;
+}
+
+.kpi-value {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+
+  .kpi-fattura &  { color: var(--color-primary); }
+  .kpi-contanti & { color: var(--color-cash); }
+  .kpi-totale &   { color: #f0f0f0; }
+}
+
+// ── Chart ─────────────────────────────────────────────────────
+.chart-section {
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #6b6b6b;
+  margin: 0 0 12px;
+}
+
+.chart-wrap {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 6px;
+  background: var(--color-surface);
+  border: 0.5px solid var(--color-border);
+  border-radius: 14px;
+  padding: 16px 12px 10px;
+}
+
+.chart-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+
+  &.today .bar-label {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+}
+
+.bar-container {
+  display: flex;
+  align-items: flex-end;
+  height: 60px;
+  width: 100%;
+  justify-content: center;
+}
+
+.bar-inner {
+  width: 10px;
+  border-radius: 4px 4px 0 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column-reverse;
+  min-height: 2px;
+  background: var(--color-border);
+}
+
+.bar-fattura {
+  background: var(--color-primary);
+  width: 100%;
+}
+
+.bar-contanti {
+  background: var(--color-cash);
+  width: 100%;
+}
+
+.bar-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  color: #6b6b6b;
+  margin-top: 6px;
+}
+
+// ── Movements list ────────────────────────────────────────────
+.movements-list {
+  background: var(--color-surface);
+  border: 0.5px solid var(--color-border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.movement-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  border-bottom: 0.5px solid var(--color-border);
+  cursor: pointer;
+
+  &:last-child { border-bottom: none; }
+  &:active { background: rgba(255,255,255,0.03); }
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &.dot-fattura  { background: var(--color-primary); }
+  &.dot-contanti { background: var(--color-cash); }
+}
+
+.mov-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.mov-client {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #f0f0f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mov-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 3px;
+}
+
+.badge-type {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: #6b6b6b;
+  background: #222222;
+  border-radius: 20px;
+  padding: 1px 8px;
+}
+
+.mov-date {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: #6b6b6b;
+}
+
+.mov-amount {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  flex-shrink: 0;
+
+  &.amount-fattura  { color: var(--color-primary); }
+  &.amount-contanti { color: var(--color-cash); }
+}
+
+// ── Empty ─────────────────────────────────────────────────────
+.empty-state {
+  padding: 40px 16px;
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: #6b6b6b;
+}

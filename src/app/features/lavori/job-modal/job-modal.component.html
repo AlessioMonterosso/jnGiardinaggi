@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="annulla()">Annulla</ion-button>
+    </ion-buttons>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button strong (click)="salva()">Salva</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form">
+
+    <!-- ── Cliente (searchable) ─────────────────────────────── -->
+    <p class="field-label">Cliente *</p>
+    <div class="client-input-wrap">
+      <div class="client-selected"
+           [class.placeholder]="!selectedClientName"
+           (click)="openClientSearch()">
+        {{ selectedClientName || 'Cerca cliente…' }}
+      </div>
+    </div>
+    <ion-note color="danger" *ngIf="err('clientId', 'required')">Cliente obbligatorio</ion-note>
+
+    <div class="client-search-panel" *ngIf="showClientList">
+      <ion-searchbar
+        placeholder="Cerca per nome…"
+        (ionInput)="onClientSearch($any($event))"
+        (ionBlur)="closeClientList()"
+        animated
+        [debounce]="150">
+      </ion-searchbar>
+      <div class="client-list">
+        <div class="client-option"
+             *ngFor="let c of filteredClients"
+             (mousedown)="selectClient(c)">
+          {{ c.name }}
+        </div>
+        <div class="client-empty" *ngIf="filteredClients.length === 0">
+          Nessun cliente trovato
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Appuntamento (opzionale) ─────────────────────────── -->
+    <p class="field-label">Appuntamento (opzionale)</p>
+    <div class="select-wrap">
+      <select class="native-select" formControlName="appointmentId">
+        <option [value]="null">— Nessun appuntamento —</option>
+        <option *ngFor="let a of clientAppointments" [value]="a.id">
+          {{ formatAppDate(a.date) }} — {{ a.workType }}
+        </option>
+      </select>
+      <div class="select-hint" *ngIf="clientAppointments.length === 0 && form.get('clientId')?.value">
+        Nessun appuntamento per questo cliente
+      </div>
+    </div>
+
+    <!-- ── Descrizione ──────────────────────────────────────── -->
+    <p class="field-label">Descrizione *</p>
+    <ion-item class="form-item">
+      <ion-textarea formControlName="description" rows="3"
+                    placeholder="Descrizione intervento…"></ion-textarea>
+    </ion-item>
+    <ion-note color="danger" *ngIf="err('description', 'required')">Descrizione obbligatoria</ion-note>
+
+    <!-- ── Stato ────────────────────────────────────────────── -->
+    <p class="field-label">Stato</p>
+    <ion-segment formControlName="status" class="seg-stato">
+      <ion-segment-button value="da_fare">
+        <ion-label>Da fare</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="completato">
+        <ion-label>Completato</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <!-- ── Note ─────────────────────────────────────────────── -->
+    <p class="field-label">Note</p>
+    <ion-item class="form-item">
+      <ion-textarea formControlName="notes" rows="2" placeholder="Annotazioni…"></ion-textarea>
+    </ion-item>
+
+  </form>
+
+  <!-- ── Azioni ───────────────────────────────────────────── -->
+  <div class="action-row">
+    <ion-button expand="block" (click)="salva()">
+      {{ isEditing ? 'Aggiorna' : 'Crea lavoro' }}
+    </ion-button>
+    <ion-button expand="block" fill="outline" color="danger"
+                *ngIf="isEditing" (click)="elimina()">
+      Elimina lavoro
+    </ion-button>
+  </div>
+</ion-content>
