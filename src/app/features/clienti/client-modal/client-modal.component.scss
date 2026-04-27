@@ -21,7 +21,7 @@
   margin-bottom: 2px;
 
   ion-input, ion-textarea {
-    --color: #f0f0f0;
+    --color: var(--ion-text-color);
     font-family: 'DM Sans', sans-serif;
     font-size: 14px;
   }

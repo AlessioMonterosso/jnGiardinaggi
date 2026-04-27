@@ -30,7 +30,7 @@
   font-family: 'Rajdhani', sans-serif;
   font-weight: 600;
   font-size: 15px;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
   text-transform: capitalize;
   padding: 0 8px;
   white-space: nowrap;
@@ -84,7 +84,7 @@ ion-fab-button {
     font-family: 'Rajdhani', sans-serif;
     font-size: 17px;
     font-weight: 600;
-    color: #c0c0c0;
+    color: #444444;
     width: 32px;
     height: 32px;
     display: flex;
@@ -160,14 +160,14 @@ ion-fab-button {
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
   font-weight: 500;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
   margin-bottom: 2px;
 }
 
 .app-type {
   font-family: 'DM Sans', sans-serif;
   font-size: 12px;
-  color: #9a9a9a;
+  color: #777777;
 }
 
 .app-addr {
@@ -243,7 +243,7 @@ $time-col-w: 44px;
     font-family: 'Rajdhani', sans-serif;
     font-size: 16px;
     font-weight: 700;
-    color: #c0c0c0;
+    color: #444444;
     width: 28px;
     height: 28px;
     display: flex;
@@ -332,7 +332,7 @@ $time-col-w: 44px;
   display: block;
   font-family: 'DM Sans', sans-serif;
   font-size: 11px;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -376,7 +376,7 @@ $time-col-w: 44px;
 
   &:active { opacity: 0.7; }
 
-  &.other-month .mcell-num { color: #3a3a3a; }
+  &.other-month .mcell-num { color: #bbbbbb; }
 
   &.today-cell .mcell-num {
     background: var(--color-primary);
@@ -399,7 +399,7 @@ $time-col-w: 44px;
   font-family: 'Rajdhani', sans-serif;
   font-size: 16px;
   font-weight: 600;
-  color: #c0c0c0;
+  color: #444444;
   line-height: 1;
 }
 

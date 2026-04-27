@@ -8,7 +8,7 @@ import {
 import { addIcons } from 'ionicons';
 import {
   homeOutline, calendarOutline, peopleOutline,
-  cardOutline, constructOutline
+  cardOutline, leafOutline
 } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { NetworkStatusService } from '../../core/services/network-status.service';
@@ -29,6 +29,6 @@ export class TabsPage {
   networkStatus = inject(NetworkStatusService);
 
   constructor() {
-    addIcons({ homeOutline, calendarOutline, peopleOutline, cardOutline, constructOutline });
+    addIcons({ homeOutline, calendarOutline, peopleOutline, cardOutline, leafOutline });
   }
 }

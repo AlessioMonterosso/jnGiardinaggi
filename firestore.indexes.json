@@ -4,14 +4,6 @@
       "collectionGroup": "appointments",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "date", "order": "ASCENDING" },
-        { "fieldPath": "__name__", "order": "ASCENDING" }
-      ]
-    },
-    {
-      "collectionGroup": "appointments",
-      "queryScope": "COLLECTION",
-      "fields": [
         { "fieldPath": "jobId", "order": "ASCENDING" },
         { "fieldPath": "date", "order": "DESCENDING" }
       ]

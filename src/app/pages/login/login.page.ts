@@ -7,7 +7,6 @@ import {
   ToastController, LoadingController
 } from '@ionic/angular/standalone';
 import { AuthService } from '../../core/services/auth.service';
-import { ThemeService } from '../../core/services/theme.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -22,7 +21,6 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginPage {
   private authService  = inject(AuthService);
-  themeService         = inject(ThemeService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
   private toastCtrl = inject(ToastController);

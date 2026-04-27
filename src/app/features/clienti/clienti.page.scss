@@ -51,7 +51,7 @@ ion-fab-button {
   font-family: 'Rajdhani', sans-serif;
   font-size: 15px;
   font-weight: 500;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

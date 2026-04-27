@@ -41,9 +41,7 @@ export class LockScreenComponent {
   }
 
   get logoSrc(): string {
-    return this.themeService.isDark()
-      ? 'assets/logo/logo-sfondo-black.png'
-      : 'assets/logo/logo.png';
+    return 'assets/logo/logo.png';
   }
 
   private async verify(): Promise<void> {

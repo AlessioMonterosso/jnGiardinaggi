@@ -5,7 +5,7 @@ ion-fab-button {
 
 // ── Filter bar ────────────────────────────────────────────────
 .filter-bar {
-  --background: #111111;
+  --background: var(--color-surface);
   --min-height: 36px;
 }
 
@@ -35,7 +35,7 @@ ion-fab-button {
   cursor: pointer;
   user-select: none;
 
-  &:active { background: rgba(255,255,255,0.03); }
+  &:active { background: rgba(0,0,0,0.05); }
 }
 
 .section-title {
@@ -79,7 +79,7 @@ ion-fab-button {
   cursor: pointer;
 
   &:last-child { border-bottom: none; }
-  &:active { background: rgba(255,255,255,0.03); }
+  &:active { background: rgba(0,0,0,0.05); }
 }
 
 // ── Badges ────────────────────────────────────────────────────
@@ -114,7 +114,7 @@ ion-fab-button {
   font-family: 'Rajdhani', sans-serif;
   font-size: 15px;
   font-weight: 500;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
 }
 
 .job-desc {

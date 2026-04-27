@@ -1,10 +1,10 @@
 <ion-header [translucent]="false">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <img src="assets/logo/logo.png" alt="DAM Impianti" class="header-logo" />
+      <img src="assets/logo/solo-logo.png" alt="JN Giardinaggi" class="header-logo" />
     </ion-buttons>
     <ion-buttons slot="end">
-      <div class="avatar" (click)="openUserMenu()">DA</div>
+      <div class="avatar" (click)="openUserMenu()">JN</div>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -21,7 +21,7 @@
   @if (installPrompt.canInstall()) {
     <div class="install-banner" (click)="installApp()">
       <ion-icon name="download-outline"></ion-icon>
-      <span>Installa DAM Impianti — accesso rapido dalla schermata home</span>
+      <span>Installa JN Giardinaggi — accesso rapido dalla schermata home</span>
       <ion-icon name="close-outline" (click)="dismissInstall($event)"></ion-icon>
     </div>
   }
@@ -29,7 +29,7 @@
   <div class="home-wrap">
 
     <!-- ── Greeting ──────────────────────────────────────────── -->
-    <p class="greeting">{{ greeting }}, <strong>Daniele</strong></p>
+    <p class="greeting">{{ greeting }}</p>
 
     <!-- ═══════════════ LOADING STATE ═══════════════ -->
     <ng-container *ngIf="isLoading">

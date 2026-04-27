@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { addIcons } from 'ionicons';
 import {
-  logOutOutline, sunnyOutline, moonOutline, cloudOfflineOutline,
+  logOutOutline, cloudOfflineOutline,
   downloadOutline, closeOutline, lockClosedOutline,
 } from 'ionicons/icons';
 import { ThemeService } from '../../core/services/theme.service';
@@ -51,7 +51,7 @@ export class HomePage {
   lastPayments: Payment[] = [];
 
   constructor() {
-    addIcons({ logOutOutline, sunnyOutline, moonOutline, cloudOfflineOutline, downloadOutline, closeOutline, lockClosedOutline });
+    addIcons({ logOutOutline, cloudOfflineOutline, downloadOutline, closeOutline, lockClosedOutline });
   }
 
   async ionViewWillEnter(): Promise<void> {
@@ -74,18 +74,12 @@ export class HomePage {
   async openUserMenu(): Promise<void> {
     const fireUser = await firstValueFrom(this.authService.currentUser$);
     const email    = fireUser?.email ?? '';
-    const isDark   = this.themeService.isDark();
     const pinSet   = this.lockService.isPinSet();
 
     const sheet = await this.actionSheetCtrl.create({
       header: email,
       cssClass: 'user-menu-sheet',
       buttons: [
-        {
-          text: isDark ? 'Passa al tema chiaro' : 'Passa al tema scuro',
-          icon: isDark ? 'sunny-outline' : 'moon-outline',
-          handler: () => { this.themeService.toggle(); },
-        },
         {
           text: pinSet ? 'Sicurezza (PIN attivo)' : 'Imposta blocco PIN',
           icon: 'lock-closed-outline',

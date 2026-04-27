@@ -21,7 +21,7 @@
   margin-bottom: 2px;
 
   ion-input, ion-select, ion-textarea {
-    --color: #f0f0f0;
+    --color: var(--ion-text-color);
     font-family: 'DM Sans', sans-serif;
     font-size: 14px;
   }
@@ -72,7 +72,7 @@ ion-note {
   background: var(--color-surface);
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
   cursor: pointer;
   min-height: 48px;
   display: flex;
@@ -111,10 +111,10 @@ ion-note {
   overflow: hidden;
 
   ion-searchbar {
-    --background: #222;
-    --color: #f0f0f0;
-    --placeholder-color: #6b6b6b;
-    --icon-color: #6b6b6b;
+    --background: var(--color-surface);
+    --color: var(--ion-text-color);
+    --placeholder-color: #888888;
+    --icon-color: #888888;
     --border-radius: 0;
     padding: 0;
   }
@@ -129,7 +129,7 @@ ion-note {
   padding: 12px 16px;
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
   border-top: 0.5px solid var(--color-border);
   cursor: pointer;
 
@@ -153,7 +153,7 @@ ion-note {
 .job-option-name {
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

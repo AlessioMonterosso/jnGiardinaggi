@@ -75,7 +75,7 @@ ion-toolbar {
   margin: 4px 0 20px;
 
   strong {
-    color: #f0f0f0;
+    color: var(--ion-text-color);
     font-weight: 500;
   }
 }
@@ -180,7 +180,7 @@ ion-toolbar {
   font-family: 'DM Sans', sans-serif;
   font-size: 13px;
   font-weight: 500;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -196,7 +196,7 @@ ion-toolbar {
   font-family: 'Rajdhani', sans-serif;
   font-size: 14px;
   font-weight: 700;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
   flex-shrink: 0;
 }
 

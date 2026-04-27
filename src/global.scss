@@ -14,8 +14,6 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/* Dark mode — attivato via classe body.dark (ThemeService) */
-@import "@ionic/angular/css/palettes/dark.class.css";
 
 @import './theme/variables.scss';
 
@@ -138,9 +136,9 @@ ion-button[color="secondary"] {
 /* ─── Searchbar ──────────────────────────────────────── */
 ion-searchbar {
   --background: var(--color-surface);
-  --color: #f0f0f0;
-  --placeholder-color: #6b6b6b;
-  --icon-color: #6b6b6b;
+  --color: var(--ion-text-color);
+  --placeholder-color: #888888;
+  --icon-color: #888888;
   --border-radius: 10px;
 }
 

@@ -38,7 +38,7 @@
 .info-value {
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
   line-height: 1.4;
 
   &.link {
@@ -48,7 +48,7 @@
   }
 
   &.notes {
-    color: #9a9a9a;
+    color: #777777;
     font-size: 13px;
   }
 }
@@ -126,7 +126,7 @@
 .list-item-title {
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

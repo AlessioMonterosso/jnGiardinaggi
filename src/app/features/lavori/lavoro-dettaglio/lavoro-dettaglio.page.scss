@@ -57,7 +57,7 @@
 .info-value {
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
 
   &.link {
     color: var(--color-primary);
@@ -66,7 +66,7 @@
 
   &.desc {
     line-height: 1.5;
-    color: #c0c0c0;
+    color: #888888;
   }
 }
 
@@ -142,7 +142,7 @@
 .pay-label {
   font-family: 'DM Sans', sans-serif;
   font-size: 13px;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
 }
 
 .pay-date {
@@ -200,7 +200,7 @@
   font-family: 'Rajdhani', sans-serif;
   font-size: 15px;
   font-weight: 600;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
 
   &.fattura  { color: var(--color-primary); }
   &.contanti { color: var(--color-cash); }
@@ -208,7 +208,7 @@
 
 .total-row .pay-total-value {
   font-size: 17px;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
 }
 
 // ── Card Ore lavorate ─────────────────────────────────────────
@@ -275,7 +275,7 @@
 .appt-title {
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

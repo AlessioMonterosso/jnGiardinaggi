@@ -1,7 +1,7 @@
 {
-  "name": "DAM Impianti",
-  "short_name": "DAM",
-  "description": "Gestione clienti e appuntamenti per DAM Impianti",
+  "name": "JN Giardinaggi",
+  "short_name": "JN",
+  "description": "Gestione lavori di giardinaggio",
   "theme_color": "#1a1a1a",
   "background_color": "#1a1a1a",
   "display": "standalone",

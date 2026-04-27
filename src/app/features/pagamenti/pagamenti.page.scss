@@ -52,7 +52,7 @@
   cursor: pointer;
 
   &:last-child { border-bottom: none; }
-  &:active { background: rgba(255,255,255,0.03); }
+  &:active { background: rgba(0,0,0,0.05); }
 
   &.table-row-empty { opacity: 0.45; }
 }
@@ -150,6 +150,7 @@ ion-fab-button {
   ion-segment-button {
     --color: var(--ion-color-medium);
     --color-checked: #ffffff;
+    --color-checked-hover: #ffffff;
     --indicator-color: var(--color-primary);
     font-family: 'DM Sans', sans-serif;
     font-size: 13px;
@@ -175,7 +176,7 @@ ion-fab-button {
   font-family: 'Rajdhani', sans-serif;
   font-size: 16px;
   font-weight: 600;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
   min-width: 160px;
   text-align: center;
   letter-spacing: 0.3px;
@@ -203,7 +204,7 @@ ion-fab-button {
 
 .kpi-fattura  { border-color: var(--color-primary); }
 .kpi-contanti { border-color: var(--color-cash); }
-.kpi-totale   { border-color: #4a4a4a; }
+.kpi-totale   { border-color: var(--color-border); }
 
 .kpi-label {
   font-family: 'DM Sans', sans-serif;
@@ -315,7 +316,7 @@ ion-fab-button {
   cursor: pointer;
 
   &:last-child { border-bottom: none; }
-  &:active { background: rgba(255,255,255,0.03); }
+  &:active { background: rgba(0,0,0,0.05); }
 }
 
 .dot {
@@ -336,7 +337,7 @@ ion-fab-button {
 .mov-client {
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
-  color: #f0f0f0;
+  color: var(--ion-text-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -352,8 +353,8 @@ ion-fab-button {
 .badge-type {
   font-family: 'DM Sans', sans-serif;
   font-size: 11px;
-  color: #6b6b6b;
-  background: #222222;
+  color: #444444;
+  background: #eeeeee;
   border-radius: 20px;
   padding: 1px 8px;
 }

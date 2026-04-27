@@ -1,18 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=DM+Sans:wght@300;400;500&display=swap');
 
-/* ─── Brand variables & Ionic palette (theme-independent) ── */
+/* ─── Tema chiaro — unico tema attivo ─────────────────────── */
 :root {
   --color-primary:    #2baa72;
   --color-cash:       #e8a020;
 
-  /* Dark defaults — sovrascritta da body.dark / body:not(.dark) */
-  --color-background: #0f0f0f;
-  --color-surface:    #181818;
-  --color-border:     #2a2a2a;
+  --color-background: #f5f5f5;
+  --color-surface:    #ffffff;
+  --color-border:     #e0e0e0;
 
   --ion-font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /* Ionic palette — invariato tra i temi */
+  --ion-background-color:            #f5f5f5;
+  --ion-background-color-rgb:        245,245,245;
+  --ion-text-color:                  #1a1a1a;
+  --ion-text-color-rgb:              26,26,26;
+  --ion-border-color:                #e0e0e0;
+  --ion-item-background:             #ffffff;
+  --ion-toolbar-background:          #ffffff;
+  --ion-toolbar-color:               #1a1a1a;
+  --ion-toolbar-border-color:        #e0e0e0;
+  --ion-tab-bar-background:          #ffffff;
+  --ion-tab-bar-border-color:        #e0e0e0;
+  --ion-tab-bar-color:               #888888;
+  --ion-tab-bar-color-selected:      #2baa72;
+  --ion-card-background:             #ffffff;
+
+  /* Ionic palette */
   --ion-color-primary:               #2baa72;
   --ion-color-primary-rgb:           43,170,114;
   --ion-color-primary-contrast:      #ffffff;
@@ -61,57 +75,6 @@
   --ion-color-medium-contrast-rgb:   255,255,255;
   --ion-color-medium-shade:          #5e5e5e;
   --ion-color-medium-tint:           #7a7a7a;
-}
-
-/* ─── Dark theme ──────────────────────────────────────────── */
-body.dark {
-  --color-background: #0f0f0f;
-  --color-surface:    #181818;
-  --color-border:     #2a2a2a;
-
-  --ion-background-color:            #0f0f0f;
-  --ion-background-color-rgb:        15,15,15;
-  --ion-text-color:                  #f0f0f0;
-  --ion-text-color-rgb:              240,240,240;
-  --ion-border-color:                #2a2a2a;
-  --ion-item-background:             #181818;
-  --ion-toolbar-background:          #111111;
-  --ion-toolbar-color:               #f0f0f0;
-  --ion-toolbar-border-color:        #2a2a2a;
-  --ion-tab-bar-background:          #111111;
-  --ion-tab-bar-border-color:        #2a2a2a;
-  --ion-tab-bar-color:               #6b6b6b;
-  --ion-tab-bar-color-selected:      #2baa72;
-  --ion-card-background:             #181818;
-
-  --ion-color-light:                 #2a2a2a;
-  --ion-color-light-rgb:             42,42,42;
-  --ion-color-light-contrast:        #ffffff;
-  --ion-color-light-contrast-rgb:    255,255,255;
-  --ion-color-light-shade:           #252525;
-  --ion-color-light-tint:            #3f3f3f;
-}
-
-/* ─── Light theme ─────────────────────────────────────────── */
-body:not(.dark) {
-  --color-background: #f5f5f5;
-  --color-surface:    #ffffff;
-  --color-border:     #e0e0e0;
-
-  --ion-background-color:            #f5f5f5;
-  --ion-background-color-rgb:        245,245,245;
-  --ion-text-color:                  #1a1a1a;
-  --ion-text-color-rgb:              26,26,26;
-  --ion-border-color:                #e0e0e0;
-  --ion-item-background:             #ffffff;
-  --ion-toolbar-background:          #ffffff;
-  --ion-toolbar-color:               #1a1a1a;
-  --ion-toolbar-border-color:        #e0e0e0;
-  --ion-tab-bar-background:          #ffffff;
-  --ion-tab-bar-border-color:        #e0e0e0;
-  --ion-tab-bar-color:               #888888;
-  --ion-tab-bar-color-selected:      #2baa72;
-  --ion-card-background:             #ffffff;
 
   --ion-color-light:                 #f4f5f8;
   --ion-color-light-rgb:             244,245,248;

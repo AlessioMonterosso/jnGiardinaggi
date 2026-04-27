@@ -1,4 +1,4 @@
-# DAM Impianti — Contesto progetto per Claude Code
+# JN Giardinaggi — Contesto progetto per Claude Code
 
 ## Stack tecnico
 
@@ -18,12 +18,12 @@
 ```ts
 // src/environments/environment.ts
 firebase: {
-  apiKey: "AIzaSyDW1DgVGvNbrhWX2SATe_yKndEA4gVl9mA",
-  authDomain: "dam-impianti.firebaseapp.com",
-  projectId: "dam-impianti",
-  storageBucket: "dam-impianti.firebasestorage.app",
-  messagingSenderId: "71710522372",
-  appId: "1:71710522372:web:4a17f64083f6c9964ac951"
+  apiKey: "AIzaSyBjOKQg0ZJJmkydso6pt2bJ3PradWBsBxA",
+  authDomain: "jn-giardinaggi.firebaseapp.com",
+  projectId: "jn-giardinaggi",
+  storageBucket: "jn-giardinaggi.firebasestorage.app",
+  messagingSenderId: "804212928235",
+  appId: "1:804212928235:web:fe3acac2fbe1fd3e3f58ae"
 }
 ```
 
@@ -567,13 +567,13 @@ Il warning Sass è atteso e non è un errore.
 
 ## GitHub
 
-Repository: `https://github.com/AlessioMonterosso/dam-impianti.git`
+Repository: `https://github.com/AlessioMonterosso/jn-giardinaggi.git`
 Branch principale: `main`
 
 ## Firebase CLI
 
 Il progetto Firebase è inizializzato (`firebase.json` + `.firebaserc` presenti).
-Progetto: `dam-impianti` | Database: `(default)` | Regione: `europe-west8`
+Progetto: `jn-giardinaggi` | Database: `(default)` | Regione: `europe-west8`
 
 ```bash
 firebase login                              # autenticazione Firebase CLI
